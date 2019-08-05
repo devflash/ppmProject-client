@@ -16,7 +16,7 @@ class Header extends Component{
                        <a href="#" className={styles.navigationItem}>SignIn</a>
                    </div>
                </div>
-               <div class={styles.toggleHamburger}>
+               <div className={styles.toggleHamburger}>
                     <div></div>
                     <div></div>
                     <div></div>

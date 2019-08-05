@@ -10,7 +10,7 @@ class ProjectItem extends Component
                    <h2>Spring / React Project</h2>
                    <span>Project to create a Kanban Board with Spring Boot and React</span>
                </div>
-               <div class={styles.ProjectOperations}>
+               <div className={styles.ProjectOperations}>
                    {/* <div className={styles.Success}>
                        <a href="#">Project Board</a> 
                    </div>
