@@ -1,0 +1,48 @@
+.DashboardContainer {
+    width: 75%;
+   
+    margin: 25px auto 0 auto;
+    height: fit-content;
+}
+.CreateProject{
+    height: fit-content;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    margin-bottom: 10px;
+}
+.CenterTitle {
+    text-align: center;
+    font-family: monospace;
+}
+
+.createProjectButton a{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    border-radius: 5px;
+}
+.ProjectItems{
+    width:85%;
+    
+    margin:0 auto;
+    /* padding: 15px; */
+    box-sizing: border-box;
+    
+}
+@media(max-width:556px)
+{
+    .DashboardContainer{
+        width: 100%;
+    }
+    .ProjectItems
+    {
+        width:100%;
+       
+    }
+    .createProjectButton{
+        text-align: center;
+    }
+}
