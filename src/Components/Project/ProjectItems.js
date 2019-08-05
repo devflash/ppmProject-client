@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import styles from './ProjectItems.module.css';
+import CustomeButton from '../UI/Button';
 class ProjectItem extends Component
 {
     render(){
@@ -10,7 +11,7 @@ class ProjectItem extends Component
                    <span>Project to create a Kanban Board with Spring Boot and React</span>
                </div>
                <div class={styles.ProjectOperations}>
-                   <div className={styles.Success}>
+                   {/* <div className={styles.Success}>
                        <a href="#">Project Board</a> 
                    </div>
                    <div className={styles.Success}>
@@ -18,7 +19,10 @@ class ProjectItem extends Component
                    </div>
                    <div className={styles.Danger}>
                         <a href="#">Delete Project</a>
-                   </div>
+                   </div> */}
+                   <CustomeButton buttonLabel="Project Board" buttonStyle="Success"/>
+                   <CustomeButton buttonLabel="Update Project" buttonStyle="Success"/>
+                   <CustomeButton buttonLabel="Delete Project" buttonStyle="Danger"/>
                </div>
            </div>
            

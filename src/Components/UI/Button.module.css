@@ -1,0 +1,17 @@
+.createProjectButton a{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    border-radius: 5px;
+}
+.Success{
+    background-color: #3498db;
+    opacity: 0.9;
+}
+.Danger{
+    background-color: #e74c3c;
+    opacity: 0.9;
+}
