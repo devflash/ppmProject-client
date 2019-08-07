@@ -6,7 +6,7 @@ import styles from './Dashboard.module.css';
 class Dashboard extends Component{
     render(){
         return(
-           <div className={styles.DashboardContainer}>
+            <React.Fragment>
                <div className={styles.CreateProject}>
                     <div className={styles.CenterTitle}>
                         <h1>Projects</h1>
@@ -20,7 +20,7 @@ class Dashboard extends Component{
                     <ProjectItem/>
                     <ProjectItem/>
                </div>
-           </div>
+               </React.Fragment>
         )
     }
 }
