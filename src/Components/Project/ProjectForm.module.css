@@ -11,3 +11,21 @@
     width:85%;
     margin: 0 auto;
 }
+.inputElement
+{
+    margin:10px 0 30px 0;
+    text-align: left;
+}
+.buttonContainer
+{
+    text-align: left;
+}
+.submitFormButton{
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+}

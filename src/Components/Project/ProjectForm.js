@@ -7,6 +7,7 @@ class ProjectForm extends Component{
             projectName:{
                 inputType:"input",
                 id:'projectName',
+                label:"Project Name",
                 config:{
                     name:"projectName",
                     type:"input",
@@ -17,6 +18,7 @@ class ProjectForm extends Component{
             projectIdentifier:{
                 inputType:"input",
                 id:'projectIdentifier',
+                label:'Project identifier',
                 config:{
                     name:'projectIdentifier',
                     type:"input",
@@ -25,10 +27,12 @@ class ProjectForm extends Component{
                 }
             },
             projectDescription:{
-                inputType:"textarea",
+                inputType:"input",
                 id:'projectDescription',
+                label:'Project Description',
                 config:{
                     name:'projectDescription',
+                    type:'input',
                     placeholder:"Project Description",
                     value:""
                 }
@@ -36,6 +40,7 @@ class ProjectForm extends Component{
             startDate:{
                 inputType:"input",
                 id:'startDate',
+                label:'Start Date',
                 config:{
                     name:'startDate',
                     type:"date",
@@ -45,6 +50,7 @@ class ProjectForm extends Component{
             endDate:{
                 inputType:"date",
                 id:'endDate',
+                label:'End Date',
                 config:{
                     name:'endDate',
                     type:"date",
@@ -84,9 +90,17 @@ class ProjectForm extends Component{
                 <form>
                 {
                     projectFormInput.map(cur=>(
-                        <CustomInput key={cur.id} inputType={cur.inputType} inputConfig={cur.config} valueChange={this.inputValueChangeHandler}/>
+                        <div class={styles.inputElement}>
+                            <label>{cur.label}</label>
+                            <CustomInput key={cur.id} inputType={cur.inputType} inputConfig={cur.config} valueChange={this.inputValueChangeHandler}/>
+                        </div>
+                        
                     ))
                 }
+                <div class={styles.buttonContainer}>
+                    <button class={styles.submitFormButton}>Create Project</button>
+                </div>
+                
                 </form>
                 
             </div>

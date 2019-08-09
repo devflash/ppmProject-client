@@ -14,7 +14,10 @@ class Dashboard extends Component{
                     {/* <div className={styles.createProjectButton}>
                         <a href="#">Create Project</a>
                     </div> */}
-                    <CustomeButton buttonLabel="Create Project" buttonStyle="createProjectButton"/>
+                    <CustomeButton 
+                        buttonLabel="Create Project" 
+                        buttonStyle="createProjectButton"
+                        path="/showForm"/>
                </div>
                <div className={styles.ProjectItems}>
                     <ProjectItem/>

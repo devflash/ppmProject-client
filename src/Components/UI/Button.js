@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './Button.module.css';
+import {Link} from 'react-router-dom';
 const customButton=(props)=>{
     return(
         <div className={styles[props.buttonStyle]}>
-            <a href="#">{props.buttonLabel}</a> 
+            <Link to={props.path}>{props.buttonLabel}</Link> 
         </div>
     )
 }

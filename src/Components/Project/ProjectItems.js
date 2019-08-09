@@ -20,9 +20,9 @@ class ProjectItem extends Component
                    <div className={styles.Danger}>
                         <a href="#">Delete Project</a>
                    </div> */}
-                   <CustomeButton buttonLabel="Project Board" buttonStyle="Success"/>
-                   <CustomeButton buttonLabel="Update Project" buttonStyle="Success"/>
-                   <CustomeButton buttonLabel="Delete Project" buttonStyle="Danger"/>
+                   <CustomeButton path="/showForm" buttonLabel="Project Board" buttonStyle="Success"/>
+                   <CustomeButton path="/showForm" buttonLabel="Update Project" buttonStyle="Success"/>
+                   <CustomeButton path="/showForm" buttonLabel="Delete Project" buttonStyle="Danger"/>
                </div>
            </div>
            
