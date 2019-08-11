@@ -34,9 +34,6 @@
 }
 @media(max-width:556px)
 {
-    .DashboardContainer{
-        width: 100%;
-    }
     .ProjectItems
     {
         width:100%;

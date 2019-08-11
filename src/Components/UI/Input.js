@@ -11,7 +11,7 @@ const Input =(props)=>{
                         name={props.inputConfig.name}
                         placeholder={props.inputConfig.placeholder} 
                         onChange={(event)=>props.valueChange(event)} 
-                        className={styles.Input}/>);
+                        className={[styles.Input,styles[props.classList]].join(" ")}/>);
         case 'textarea':
             return (<textarea 
                         value={props.inputConfig.value} 
