@@ -6,25 +6,25 @@ import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers,applyMiddleware,compose} from 'redux';
-
+import projectReducer from './store/reducers/ProjectReducer';
 
 import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
-// const rootReducer=combineReducers(
-//     {
-//         project:projectReducer
-//     }
+const rootReducer=combineReducers(
+    {
+        projectReducer:projectReducer
+    }
     
-// )
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+)
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app=(
-    // <Provider store={store}>
+    <Provider store={store}>
         <BrowserRouter>
             <App/>
         </BrowserRouter>
-    // </Provider>
+    </Provider>
 )
 ReactDOM.render(app, document.getElementById('root'));
 
