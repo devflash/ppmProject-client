@@ -4,6 +4,7 @@ import CustomeButton from './UI/Button';
 import styles from './Dashboard.module.css';
 import {connect} from 'react-redux';
 import * as projectActions from '../store/actions/ProjectActions';
+import ErrorHandler from './ErrorHandler/ErrorHandler';
 
 class Dashboard extends Component{
     componentDidMount(){
@@ -11,6 +12,17 @@ class Dashboard extends Component{
         this.props.onFetchProjects();
     }
     render(){
+        let projectsToDisplay=[];
+        let error=null;
+        if(this.props.projects!==null && this.props.projects.length!==0)
+        {
+            projectsToDisplay=this.props.projects.map(cur=>(
+                <ProjectItem projectName={cur.projectName} projectDescription={cur.projectDescription}/>
+           ))
+        }
+        else{
+            error=(<ErrorHandler errorMessage="Please create new Project"/>)
+        }
         return(
             <React.Fragment>
                <div className={styles.CreateProject}>
@@ -26,12 +38,8 @@ class Dashboard extends Component{
                         path="/showForm"/>
                </div>
                <div className={styles.ProjectItems}>
-                   {
-                     this.props.projects ?  this.props.projects.map(cur=>(
-                        <ProjectItem projectName={cur.projectName} projectDescription={cur.projectDescription}/>
-                   )) : null
-                   }
-
+                  {error}
+                  {projectsToDisplay}
                     {/* <ProjectItem projectName="sahdkhkasdhkahd" projectDescription="aksjdakdhkahsdkhassd"/> */}
                     
                </div>
