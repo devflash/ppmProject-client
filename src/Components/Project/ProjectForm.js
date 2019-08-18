@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import styles from './ProjectForm.module.css';
 import  CustomInput from '../UI/Input';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import * as projectActions from '../../store/actions/ProjectActions';
 class ProjectForm extends Component{
     state={
         projectForm:{
@@ -10,11 +12,12 @@ class ProjectForm extends Component{
                 id:'projectName',
                 label:"Project Name",
                 errorMessage:"",
+                value:"",
                 config:{
                     name:"projectName",
                     type:"input",
-                    placeholder:"Project Name",
-                    value:""
+                    placeholder:"Project Name"
+                    
                    
                 }
 
@@ -24,11 +27,12 @@ class ProjectForm extends Component{
                 id:'projectIdentifier',
                 label:'Project identifier',
                 errorMessage:"",
+                value:"",
                 config:{
                     name:'projectIdentifier',
                     type:"input",
-                    placeholder:"Project Identifier",
-                    value:""
+                    placeholder:"Project Identifier"
+                
                 }
             },
             projectDescription:{
@@ -36,11 +40,11 @@ class ProjectForm extends Component{
                 id:'projectDescription',
                 label:'Project Description',
                 errorMessage:"",
+                value:"",
                 config:{
                     name:'projectDescription',
                     type:'input',
-                    placeholder:"Project Description",
-                    value:""
+                    placeholder:"Project Description"
                 }
             },
             startDate:{
@@ -48,10 +52,10 @@ class ProjectForm extends Component{
                 id:'startDate',
                 label:'Start Date',
                 errorMessage:"",
+                value:"",
                 config:{
                     name:'startDate',
-                    type:"date",
-                    value:""
+                    type:"date"
                 }
             },
             endDate:{
@@ -59,76 +63,93 @@ class ProjectForm extends Component{
                 id:'endDate',
                 label:'End Date',
                 errorMessage:"",
+                value:"",
                 config:{
                     name:'endDate',
-                    type:"date",
-                    value:""
+                    type:"date"
                 }
             }
         }
     }
-    onSubmitClickHandler=(event)=>{
+    onSubmitClickHandler=(event,formType)=>{
         event.preventDefault();
-        const newProject={};
-        for(const inputElement in this.state.projectForm)
+        if(formType==='create')
         {
-            newProject[inputElement]=this.state.projectForm[inputElement].config.value;
-        }
-        axios.post("http://localhost:8080/api/project",newProject)
-            .then(response=>{
-               this.props.history.push("/");
-            })
-            .catch(errors=>{
-            for(const inputField in this.state.projectForm)
+            const newProject={};
+            for(const inputElement in this.state.projectForm)
             {
-                if(errors.response.data[inputField])
+                newProject[inputElement]=this.state.projectForm[inputElement].value;
+            }
+            axios.post("http://localhost:8080/api/project",newProject)
+                .then(response=>{
+                this.props.history.push("/");
+                })
+                .catch(errors=>{
+                for(const inputField in this.state.projectForm)
                 {
-                    const updatedProjectForm={
-                        ...this.state.projectForm,
+                    if(errors.response.data[inputField])
+                    {
+                        const updatedProjectForm={
+                            ...this.state.projectForm,
+                                [inputField]:{
+                                    ...this.state.projectForm[inputField],
+                                    errorMessage:errors.response.data[inputField]
+                                    }
+                                }
+                        this.setState({projectForm:updatedProjectForm})
+                                
+                    }
+                    else
+                    {
+                        const updatedProjectForm={
+                            ...this.state.projectForm,
                             [inputField]:{
                                 ...this.state.projectForm[inputField],
-                                errorMessage:errors.response.data[inputField]
-                                }
+                                errorMessage:""
                             }
-                    this.setState({projectForm:updatedProjectForm})
-                            
-                }
-                else
-                {
-                    const updatedProjectForm={
-                        ...this.state.projectForm,
-                        [inputField]:{
-                            ...this.state.projectForm[inputField],
-                            errorMessage:""
                         }
+                    this.setState({projectForm:updatedProjectForm})
+                    
                     }
-                   this.setState({projectForm:updatedProjectForm})
-                
                 }
-            }
-            })
-    }
-    inputValueChangeHandler=(event)=>{
-        const updatedProjectForm={
-            ...this.state.projectForm,
-            [event.target.name]:{
-                ...this.state.projectForm[event.target.name],
-                config:{
-                    ...this.state.projectForm[event.target.name].config,
-                    value:event.target.value
-                } 
-            }
+                })
 
+            }
+            else
+            {
+                this.props.onUpdateProject(this.props.updatedProject);
+            }
+            
+    }
+    inputValueChangeHandler=(event,formType)=>{
+        if(formType==='create')
+        {
+            const updatedProjectForm={
+                ...this.state.projectForm,
+                [event.target.name]:{
+                    ...this.state.projectForm[event.target.name],
+                    value:event.target.value 
+                }
+    
+            }
+            this.setState({projectForm:updatedProjectForm});
         }
-        this.setState({projectForm:updatedProjectForm});
+        else
+        {
+            this.props.onUpdatedProjectValueChanged(event.target.name,event.target.value);
+        }
+        
     }
     render()
     {
+       const formType=this.props.match.params.formAction;
         const projectFormInput=[];
+ 
         for(let key in this.state.projectForm)
         {
             projectFormInput.push(this.state.projectForm[key]);
         }
+       
 
         return(
             <React.Fragment>
@@ -136,9 +157,9 @@ class ProjectForm extends Component{
                   <h1>Project Form</h1>
             </div>
             <div className={styles.ProjectFrom}>
-                <form onSubmit={(event)=>this.onSubmitClickHandler(event)}>
+                <form onSubmit={(event,formType)=>this.onSubmitClickHandler(event,formType)}>
                 {
-                    
+                    formType==="create" ?
                     projectFormInput.map(cur=>{
                         let classList="";
                         if(cur.errorMessage)
@@ -148,14 +169,41 @@ class ProjectForm extends Component{
                        return (
                         <div class={styles.inputElement}>
                             <label>{cur.label}</label>
-                            <CustomInput classList={classList} key={cur.id} inputType={cur.inputType} inputConfig={cur.config} valueChange={this.inputValueChangeHandler}/>
+                            <CustomInput classList={classList}
+                                 key={cur.id} inputType={cur.inputType}
+                                 inputConfig={cur.config} 
+                                 valueChange={(formType)=>this.inputValueChangeHandler(formType)}
+                                 inputValue={cur.value}/>
                             <p className={styles.errorMessage}>{cur.errorMessage}</p>
                         </div>
                         
                     )})
-                }
+                    : 
+                    projectFormInput.map(cur=>{
+                        let classList="";
+                        if(cur.errorMessage)
+                        {
+                            classList="InvalidInput";
+                        }
+                       return (
+                        <div class={styles.inputElement}>
+                            <label>{cur.label}</label>
+                            <CustomInput classList={classList} 
+                                         key={cur.id} 
+                                         inputType={cur.inputType} 
+                                         inputConfig={cur.config} 
+                                         valueChange={this.inputValueChangeHandler}
+                                         inputValue={this.props.updatedProject[cur.id]}/>
+
+                            <p className={styles.errorMessage}>{cur.errorMessage}</p>
+                        </div>
+                        
+                    )
+                    })
+                 
+            }
                 <div class={styles.buttonContainer}>
-                    <button class={styles.submitFormButton}>Create Project</button>
+                    <button class={styles.submitFormButton}>Update Project</button>
                 </div>
                 
                 </form>
@@ -165,5 +213,19 @@ class ProjectForm extends Component{
         )
     }
 }
+const mapStateToProps=(state)=>{
+    return{
+        updatedProject:state.projectReducer.updatedProject.updatedProjectDetails,
+        updationErrors:state.projectReducer.updatedProject.updationErrors
+    }
+    
+}
+const mapEventToProps=(dispatch)=>{
+    return{
+        onUpdatedProjectValueChanged:(inputName,updatedValue)=>dispatch(projectActions.updateProjectValueChanged(inputName,updatedValue)),
+        onUpdateProject:(updatedProject)=>dispatch(projectActions.updateProject(updatedProject))
+    }
 
-export default ProjectForm;
+}
+
+export default connect(mapStateToProps,mapEventToProps)(ProjectForm);

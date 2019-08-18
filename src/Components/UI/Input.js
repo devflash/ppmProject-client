@@ -7,14 +7,14 @@ const Input =(props)=>{
         case 'input':
             return (<input 
                         type={props.inputConfig.type}
-                        value={props.inputConfig.value}
+                        value={props.inputValue}
                         name={props.inputConfig.name}
                         placeholder={props.inputConfig.placeholder} 
                         onChange={(event)=>props.valueChange(event)} 
                         className={[styles.Input,styles[props.classList]].join(" ")}/>);
         case 'textarea':
             return (<textarea 
-                        value={props.inputConfig.value} 
+                        value={props.inputValue} 
                         name={props.inputConfig.name} 
                         placeholder={props.inputConfig.placeholder} 
                         onChange={(event)=>props.valueChange(event)}
@@ -22,7 +22,7 @@ const Input =(props)=>{
         default:
             return (<input 
                         type={props.inputConfig.type} 
-                        value={props.inputConfig.value} 
+                        value={props.inputValue} 
                         name={props.inputConfig.name} 
                         onChange={(event)=>props.valueChange(event)} 
                         className={styles.Input}/>);

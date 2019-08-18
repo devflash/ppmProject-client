@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "projectName": "Project management tool",
+        "projectDescription": "React project with spring boot",
+        "projectIdentifier": "PRO1",
+        "startDate": null,
+        "endDate": null,
+        "created_At": "2019-32-13",
+        "updated_At": null
+    },
+    {
+        "id": 2,
+        "projectName": "Burger builder",
+        "projectDescription": "make and order burgers",
+        "projectIdentifier": "PRO2",
+        "startDate": null,
+        "endDate": null,
+        "created_At": "2019-32-13",
+        "updated_At": null
+    },
+    {
+        "id": 3,
+        "projectName": "Budgetery",
+        "projectDescription": "Manage your budget with budhetery",
+        "projectIdentifier": "PRO3",
+        "startDate": null,
+        "endDate": null,
+        "created_At": "2019-33-13",
+        "updated_At": null
+    }
+]

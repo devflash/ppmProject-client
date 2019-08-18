@@ -12,10 +12,10 @@ class App extends Component {
     return (
       <div>
         <Header/>
-        <div class="DashboardContainer">
+        <div className="DashboardContainer">
         <Switch>
           
-            <Route  path="/showForm" component={ProjectForm}/>
+            <Route  path="/showForm/:formAction" component={ProjectForm}/>
             <Route  path="/" component={Dashboard}/>
         
           
