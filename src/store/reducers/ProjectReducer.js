@@ -23,28 +23,10 @@ const projectReducer=(state=initialState,action)=>{
                 error:true
             }
         }
-        case actionTypes.INITIALISE_FOR_UPDATE:{
-            return{
-                ...state,
-                updatedProject:{
-                    ...state.updatedProject,
-                    updatedProjectDetails:action.project
-                }
-            }
-        }
-        case actionTypes.UPDATE_PROJECT_VALUE_CHANGED:{
-            return{
-                ...state,
-                updatedProject:{
-                    ...state.updatedProject,
-                    updatedProjectDetails:{
-                        ...state.updatedProject.updatedProjectDetails,
-                        [action.inputName]:action.updatedValue
-                    }
-                    
-                }
-            }
-        }
+        
+       
+      
+        
         default:{
             return initialState;
         }

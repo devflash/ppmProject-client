@@ -10,21 +10,21 @@ const Input =(props)=>{
                         value={props.inputValue}
                         name={props.inputConfig.name}
                         placeholder={props.inputConfig.placeholder} 
-                        onChange={(event)=>props.valueChange(event)} 
+                        onChange={props.valueChange} 
                         className={[styles.Input,styles[props.classList]].join(" ")}/>);
         case 'textarea':
             return (<textarea 
                         value={props.inputValue} 
                         name={props.inputConfig.name} 
                         placeholder={props.inputConfig.placeholder} 
-                        onChange={(event)=>props.valueChange(event)}
+                        onChange={props.valueChange}
                         className={[styles.Textarea,styles.Input].join(' ')}></textarea>);
         default:
             return (<input 
                         type={props.inputConfig.type} 
                         value={props.inputValue} 
                         name={props.inputConfig.name} 
-                        onChange={(event)=>props.valueChange(event)} 
+                        onChange={props.valueChange} 
                         className={styles.Input}/>);
 
     }

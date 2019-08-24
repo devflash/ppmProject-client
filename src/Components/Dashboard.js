@@ -8,6 +8,9 @@ import ErrorHandler from './ErrorHandler/ErrorHandler';
 import axios from 'axios';
 
 class Dashboard extends Component{
+    state={
+        serviceError:false
+    }
     componentDidMount(){
         this.props.onFetchProjects();
     }
@@ -17,18 +20,13 @@ class Dashboard extends Component{
         .then(response=>{
             this.props.onFetchProjects();
         }).catch(error=>{
-           
+           this.setState({serviceError:true})
         })
     }
     onUpdateClickHandler=(projectId)=>{
-        const selectedProject=this.props.projects.find(cur=>{
-           return cur.projectIdentifier===projectId
-        });
-        delete selectedProject.created_At;
-        delete selectedProject.updated_At;
-        this.props.onInitializeUpdatedProject(selectedProject);
         this.props.history.push({
-            pathname:'showForm/update'
+            pathname:'showForm/update/'+projectId,
+
         })
     }
     render(){
@@ -49,9 +47,9 @@ class Dashboard extends Component{
         else{
             error=(<ErrorHandler errorMessage="Please create new Project"/>)
         }
-        if(this.props.error)
+        if(this.props.error || this.state.serviceError)
         {
-            error=(<ErrorHandler errorMessage="Something went wrong"/>)
+            error=(<ErrorHandler errorMessage="Please check connection"/>)
         }
         return(
             <React.Fragment>
@@ -78,7 +76,7 @@ class Dashboard extends Component{
 const mapEventToProps=(dispatch)=>{
     return{
         onFetchProjects:()=>dispatch(projectActions.fetchProjects()),
-        onInitializeUpdatedProject:(project)=>dispatch(projectActions.initialiseforUpdate(project))
+       
     }
 
 }
