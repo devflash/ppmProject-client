@@ -1,0 +1,54 @@
+.projectDashboardContainer
+{
+    width:100%;
+}
+.createTaskButtonContainer
+{
+    height: fit-content;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    margin-bottom: 10px;
+}
+.projectTasksContainer
+{
+    display:flex;
+}
+.toDotaskList
+{
+    flex-grow: 1;
+}
+.toDoHeader
+{
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 0;
+    background-color: #6c757d;
+    color: #fff;
+}
+.inprogressTaskList
+{
+    flex-grow: 1;
+}
+.inProgressHeader
+{
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 0;
+    background-color: #007bff;
+    color: #fff;
+}
+.completedTasksList
+{
+    flex-grow: 1;
+}
+.completeHeader
+{
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 0;
+    background-color: #28a745;
+    color: #fff;
+}

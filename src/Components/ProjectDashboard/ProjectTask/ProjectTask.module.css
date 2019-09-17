@@ -1,0 +1,47 @@
+.projectTask
+{
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 5px;
+    width: 90%;
+    margin: 10px auto 0 auto;
+}
+.projectTaskHeader
+{
+    text-align: center;
+    background-color: #17A2B8;
+    padding: 10px 0;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.projectTaskHeader span:first-child,
+.projectTaskDescription div:first-child span
+{
+    font-weight: bold;
+}
+
+.projectTaskBody
+{
+    padding:5px 5px;
+}
+.projectTaskDescription
+{
+
+}
+.projectTaskDescription div
+{
+    margin-bottom: 5px;
+}
+.projectTaskOperations
+{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+}
+.projectTaskOperation
+{
+    display: inline-block;
+    width: 75px;
+    font-size: 15px;
+}

@@ -9,10 +9,25 @@
 }
 .Success{
     background-color: #3498db;
-    
+    border-radius: 5px;
     opacity: 0.9;
+    margin-bottom: 5px;
 }
 .Danger{
     background-color: #e74c3c;
+    border-radius: 5px;
     opacity: 0.9;
+    margin-bottom: 5px;
+}
+.Success a,.Danger a
+{
+    color: #fff;
+    padding: 10px 10px;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    text-decoration: none;
 }

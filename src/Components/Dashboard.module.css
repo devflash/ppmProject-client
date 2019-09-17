@@ -1,9 +1,4 @@
-/* .DashboardContainer {
-    width: 75%;
-   
-    margin: 25px auto 0 auto;
-    height: fit-content;
-} */
+
 .CreateProject{
     height: fit-content;
     padding-bottom: 10px;
@@ -15,15 +10,7 @@
     font-family: monospace;
 }
 
-.createProjectButton a{
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 20px;
-    background-color: #17a2b8;
-    border-color: #17a2b8;
-    border-radius: 5px;
-}
+
 .ProjectItems{
     width:85%;
     

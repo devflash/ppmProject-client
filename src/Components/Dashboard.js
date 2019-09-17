@@ -29,6 +29,11 @@ class Dashboard extends Component{
 
         })
     }
+    onProjectDashboardClickHandler=(projectId)=>{
+        this.props.history.push({
+            pathname:'projectDashboard/'+projectId,
+        })
+    }
     render(){
         let projectsToDisplay=[];
         let error=null;
@@ -38,7 +43,7 @@ class Dashboard extends Component{
                 <ProjectItem key={cur.projectIdentifier} 
                              projectName={cur.projectName} 
                              projectDescription={cur.projectDescription}
-                             onCreateClick={this.onCreateClickHandler}
+                             onProjectDashboardClick={()=>this.onProjectDashboardClickHandler(cur.projectIdentifier)}
                              onDeleteClick={()=>this.onDeleteClickHandler(cur.projectIdentifier)}
                              onUpdateClick={()=>this.onUpdateClickHandler(cur.projectIdentifier)}/>
                                 

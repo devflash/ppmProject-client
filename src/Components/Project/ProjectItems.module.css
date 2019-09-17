@@ -1,17 +1,21 @@
 .ProjectItem
 {
     display:flex;
-    justify-content: space-between;
-    height: 135px;
-    flex-wrap: wrap;
+    
+    height: auto;
+   
     margin-bottom:10px;
     border:1px solid rgba(0, 0, 0, 0.125);
     background-color: #f8f9fa;
     padding: 15px;
     border-radius: 5px;
+
 }
 .projectInfo{
-    flex-grow: 1;
+    flex:1 0 25%;
+    width:70%;
+    height:auto;
+    padding:5px;
 }
 .projectInfo h2
 {
@@ -24,40 +28,20 @@
 }
 .ProjectOperations
 {
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    height:auto;
+    flex:1 0 25%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-}
-.ProjectOperations div{
+    /* justify-content: space-between; */
    
-    border:1px solid black;
-    border-radius: 5px;
-    padding:10px 0px;
-    text-align: center;
 }
-.ProjectOperations a
+@media(max-width:500px)
 {
-    text-decoration: none;
-    color:#fff;
-    display: inline-block;
-    cursor: pointer;
-}
-.Success{
-    background-color: #3498db;
-    opacity: 0.9;
-}
-.Danger{
-    background-color: #e74c3c;
-    opacity: 0.9;
+    .ProjectItem
+    {
+        flex-direction: column;
+    } 
 }
 
-@media(max-width:920px)
-{
-    .ProjectItem{
-        padding:3px;
-    }
-    .ProjectOperations{
-        flex-flow: row;
-    }
-}
+ 
