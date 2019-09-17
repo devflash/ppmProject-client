@@ -24,8 +24,8 @@ const fetchProjectFail=()=>{
 
 export const fetchProjects=()=>{
     return dispatch=>{
-        axios.get("./service/projectsList.json")
-        // axios.get('http://localhost:8080/api/project/all')
+        // axios.get("./service/projectsList.json")
+        axios.get('http://localhost:8080/api/project/all')
             .then(response=>{
                 dispatch(fetchProjectSuccess(response.data));
             })

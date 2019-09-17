@@ -19,6 +19,16 @@ const Input =(props)=>{
                         placeholder={props.inputConfig.placeholder} 
                         onChange={props.valueChange}
                         className={[styles.Textarea,styles.Input].join(' ')}></textarea>);
+        case 'select':
+            return (
+                <select name={props.inputConfig.name}
+                        onChange={props.valueChange}
+                        className={[styles.Input,styles[props.classList]].join(' ')}>
+                    {props.inputConfig.options.map(cur=>(
+                        <option value={cur}>{cur}</option>
+                    ))}        
+                </select>
+            );
         default:
             return (<input 
                         type={props.inputConfig.type} 

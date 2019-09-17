@@ -62,7 +62,7 @@ class ProjectForm extends Component{
                 }
             },
             endDate:{
-                inputType:"date",
+                inputType:"input",
                 id:'endDate',
                 label:'End Date',
                 errorMessage:"",
@@ -71,7 +71,8 @@ class ProjectForm extends Component{
                     name:'endDate',
                     type:"date"
                 }
-            }
+            },
+            buttonLabel:"Create Project"
         },
         update:{
             projectName:{
@@ -126,7 +127,7 @@ class ProjectForm extends Component{
                 }
             },
             endDate:{
-                inputType:"date",
+                inputType:"input",
                 id:'endDate',
                 label:'End Date',
                 errorMessage:"",
@@ -135,15 +136,69 @@ class ProjectForm extends Component{
                     name:'endDate',
                     type:"date"
                 }
-            }
+            },
+            buttonLabel:"Update Project"
+        },
+        taskCreate:{
+            summary:{
+                inputType:"input",
+                id:'summary',
+                label:"Summary",
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:"summary",
+                    type:"input",
+                    placeholder:"Summary"
+                    
+                   
+                }
+            },
+            acceptanceCriteria:{
+                inputType:"input",
+                id:'acceptanceCriteria',
+                label:"Acceptance criteria",
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:"acceptanceCriteria",
+                    type:"input",
+                    placeholder:"Acceptance criteria"
+                    
+                   
+                }
+            },
+            dueDate:{
+                inputType:"input",
+                id:'dueDate',
+                label:'Due date',
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:'dueDate',
+                    type:"date"
+                }
+            },
+            priority:{
+                inputType:"select",
+                id:'priority',
+                label:'Priority',
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:'priority',
+                    options:['Low','Medium','High']
+                }
+            },
+            buttonLabel:"Create Task"
         },
         serviceError:false
     }
     componentDidMount(){
-        if(this.props.match.params.projectID)
+        if(this.props.match.params.projectId && this.props.match.params.formAction==="update")
         {
             
-            const projectId=this.props.match.params.projectID;
+            const projectId=this.props.match.params.projectId;
             const selectedProject=this.props.projects.find(cur=>{
             return cur.projectIdentifier===projectId
             });
@@ -174,47 +229,69 @@ class ProjectForm extends Component{
     onSubmitClickHandler=(event,formType)=>{
         event.preventDefault();
         
-            const newProject={};
+            const payload={};
+            let url=null;
+            let navigator=null;
             for(const inputElement in this.state[formType])
             {
-                newProject[inputElement]=this.state[formType][inputElement].value;
+                if(inputElement!=="buttonLabel")
+                    payload[inputElement]=this.state[formType][inputElement].value;
             }
-            if(formType==="update")
+            if(formType==="update" || formType==="create")
             {
-                newProject.id=projectIdentifier;
+                url="http://localhost:8080/api/project";
+                navigator="/";
+                if(formType==="update")
+                {
+                    payload.id=projectIdentifier;
+                }
+                
             }
-            axios.post("http://localhost:8080/api/project",newProject)
+            if(formType==="taskCreate" || formType==="taskUpdate")
+            {
+                url="http://localhost:8080/api/backlog/"+this.props.match.params.projectId;
+                navigator="/";
+                if(formType==="update")
+                {
+                    payload.id=projectIdentifier;
+                } 
+            }
+            axios.post(url,payload)
                 .then(response=>{
-                this.props.history.push("/");
+                this.props.history.push(navigator);
                 })
                 .catch(errors=>{
                 if(errors.response){
                 for(const inputField in this.state[formType])
                 {
-                    if(errors.response.data[inputField])
+                    if(inputField!=="buttonLabel")
                     {
-                        const updatedProjectForm={
-                            ...this.state[formType],
+                        if(errors.response.data[inputField])
+                        {
+                            const updatedProjectForm={
+                                ...this.state[formType],
+                                    [inputField]:{
+                                        ...this.state[formType][inputField],
+                                        errorMessage:errors.response.data[inputField]
+                                        }
+                                    }
+                            this.setState({[formType]:updatedProjectForm})
+                                    
+                        }
+                        else
+                        {
+                            const updatedProjectForm={
+                                ...this.state[formType],
                                 [inputField]:{
                                     ...this.state[formType][inputField],
-                                    errorMessage:errors.response.data[inputField]
-                                    }
+                                    errorMessage:""
                                 }
-                        this.setState({[formType]:updatedProjectForm})
-                                
-                    }
-                    else
-                    {
-                        const updatedProjectForm={
-                            ...this.state[formType],
-                            [inputField]:{
-                                ...this.state[formType][inputField],
-                                errorMessage:""
                             }
+                        this.setState({[formType]:updatedProjectForm})
+                        
                         }
-                    this.setState({[formType]:updatedProjectForm})
-                    
                     }
+                   
                 }
             }
             else
@@ -244,11 +321,13 @@ class ProjectForm extends Component{
     {
       
        const formType=this.props.match.params.formAction;
-        const projectFormInput=[];
+       
+       const projectFormInput=[];
  
         for(let key in this.state[formType])
         {
-            projectFormInput.push(this.state[formType][key]);
+            if(key!=="buttonLabel")
+                projectFormInput.push(this.state[formType][key]);
         }
         return(
             <React.Fragment>
@@ -286,7 +365,7 @@ class ProjectForm extends Component{
                  
             }
                 <div class={styles.buttonContainer}>
-                    <button class={styles.submitFormButton}>{formType} Project</button>
+                    <button class={styles.submitFormButton}>{this.state[formType].buttonLabel}</button>
                 </div>
                 
                 </form>
