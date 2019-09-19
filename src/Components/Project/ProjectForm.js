@@ -6,6 +6,11 @@ import {connect} from 'react-redux';
 import Error from '../ErrorHandler/ErrorHandler'
 import * as projectActions from '../../store/actions/ProjectActions';
 let projectIdentifier="";
+const taskPriorities={
+    "Low":3,
+    "Medium":2,
+    "High":1
+}
 class ProjectForm extends Component{
     
     state={
@@ -192,10 +197,63 @@ class ProjectForm extends Component{
             },
             buttonLabel:"Create Task"
         },
+        taskUpdate:{
+            summary:{
+                inputType:"input",
+                id:'summary',
+                label:"Summary",
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:"summary",
+                    type:"input",
+                    placeholder:"Summary"
+                    
+                   
+                }
+            },
+            acceptanceCriteria:{
+                inputType:"input",
+                id:'acceptanceCriteria',
+                label:"Acceptance criteria",
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:"acceptanceCriteria",
+                    type:"input",
+                    placeholder:"Acceptance criteria"
+                    
+                   
+                }
+            },
+            dueDate:{
+                inputType:"input",
+                id:'dueDate',
+                label:'Due date',
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:'dueDate',
+                    type:"date"
+                }
+            },
+            priority:{
+                inputType:"select",
+                id:'priority',
+                label:'Priority',
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:'priority',
+                    options:['Low','Medium','High']
+                }
+            },
+            buttonLabel:"Update Task"
+        },
         serviceError:false
     }
     componentDidMount(){
-        if(this.props.match.params.projectId && this.props.match.params.formAction==="update")
+        if(this.props.match.params.projectId && (this.props.match.params.formAction==="update" || this.props.match.params.formAction==="taskUpdate"))
         {
             
             const projectId=this.props.match.params.projectId;
@@ -235,7 +293,13 @@ class ProjectForm extends Component{
             for(const inputElement in this.state[formType])
             {
                 if(inputElement!=="buttonLabel")
-                    payload[inputElement]=this.state[formType][inputElement].value;
+                {
+                    if(inputElement==="priority")
+                        payload[inputElement]=taskPriorities[this.state[formType][inputElement].value];     
+                    else
+                        payload[inputElement]=this.state[formType][inputElement].value;
+                }
+                    
             }
             if(formType==="update" || formType==="create")
             {
@@ -250,7 +314,7 @@ class ProjectForm extends Component{
             if(formType==="taskCreate" || formType==="taskUpdate")
             {
                 url="http://localhost:8080/api/backlog/"+this.props.match.params.projectId;
-                navigator="/";
+                navigator="/projectDashboard/"+this.props.match.params.projectId;
                 if(formType==="update")
                 {
                     payload.id=projectIdentifier;

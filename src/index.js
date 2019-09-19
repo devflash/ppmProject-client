@@ -7,12 +7,14 @@ import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers,applyMiddleware,compose} from 'redux';
 import projectReducer from './store/reducers/ProjectReducer';
+import taskReducer from './store/reducers/TaskReducer';
 
 import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 const rootReducer=combineReducers(
     {
-        projectReducer:projectReducer
+        projectReducer:projectReducer,
+        taskReducer:taskReducer
     }
     
 )

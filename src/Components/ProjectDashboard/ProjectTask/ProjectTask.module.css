@@ -8,7 +8,7 @@
 .projectTaskHeader
 {
     text-align: center;
-    background-color: #17A2B8;
+   
     padding: 10px 0;
     color: #fff;
     border-top-left-radius: 5px;
@@ -36,12 +36,24 @@
 {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
 }
 .projectTaskOperation
 {
     display: inline-block;
-    width: 75px;
-    font-size: 15px;
+    width: 45%;
+    font-size: 12px;
+}
+.Low
+{
+     background-color: #17A2B8;
+}
+.Medium
+{
+    background-color: #f1c40f;
+}
+.High
+{
+    background-color: #e74c3c;
 }

@@ -15,7 +15,7 @@
 }
 .toDotaskList
 {
-    flex-grow: 1;
+    flex:1 0 25%;
 }
 .toDoHeader
 {
@@ -28,7 +28,7 @@
 }
 .inprogressTaskList
 {
-    flex-grow: 1;
+    flex:1 0 25%;
 }
 .inProgressHeader
 {
@@ -41,7 +41,7 @@
 }
 .completedTasksList
 {
-    flex-grow: 1;
+    flex:1 0 25%;
 }
 .completeHeader
 {
@@ -51,4 +51,11 @@
     padding: 10px 0;
     background-color: #28a745;
     color: #fff;
+}
+@media(max-width:556px)
+{
+    .projectTasksContainer
+    {
+        flex-direction: column;
+    }
 }

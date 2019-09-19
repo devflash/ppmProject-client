@@ -4,24 +4,24 @@ import CustomeButton from '../../UI/Button';
 const projectTask=(props)=>{
     return(
         <div className={styles.projectTask}>
-            <div className={styles.projectTaskHeader}>
-                <span>ID: PRO8-5 </span>
-                <span>Priority: LOW</span>
+            <div className={[styles.projectTaskHeader,styles[props.priority]].join(' ')}>
+                <span>ID: {props.projectId}</span>
+                <span>Priority: {props.priority}</span>
             </div>
             <div className={styles.projectTaskBody}>
                 <div className={styles.projectTaskDescription}>
                     <div>
-                        <span>Project Title</span>
+                        <span>{props.taskName}</span>
                     </div>
                     <div>
-                        <span>Project acceptance criteria</span>
+                        <span>{props.acceptanceCriteria}</span>
                     </div>
                 </div>
                 <div className={styles.projectTaskOperations}>
                 <div className={styles.projectTaskOperation}>
                     <CustomeButton buttonLabel="Update" 
                                    buttonStyle="Success"
-                                   path="/">
+                                   path={"/showForm/taskUpdate/"+props.projectId}>
                     </CustomeButton>                   
                 </div>
                 <div className={styles.projectTaskOperation}>
