@@ -9,6 +9,7 @@
 {
     text-align: center;
     width:85%;
+    max-width: 550px;
     margin: 0 auto;
 }
 .inputElement
@@ -33,4 +34,15 @@
 {
     margin: 0;
     color: #c0392b;
+}
+.backToDashboard
+{
+   
+    padding:10px 0;
+    width:200px;
+    cursor: pointer;
+}
+.backToDashboard span
+{
+    margin-left:5px;
 }

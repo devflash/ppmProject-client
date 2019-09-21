@@ -26,11 +26,11 @@ class ProjectDashboard extends Component
         if(this.props.tasks!==null && this.props.tasks.length!==0)
         {
             this.props.tasks.forEach(element => {
-                if(element.status==="TO-DO")
+                if(element.status==="To do")
                     toDOList.push(element);
-                if(element.status==="IN-PROGRESS")
+                if(element.status==="Inprogress")
                     inProgressList.push(element);
-                if(element.status==="COMPLETE")
+                if(element.status==="Completed")
                     completedList.push(element);    
             });
             tasksToDisplay=(

@@ -8,6 +8,7 @@ import {Route,Switch} from 'react-router-dom';
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "jquery/src/jquery";
 // import "bootstrap/dist/js/bootstrap.min.js";
+// import '../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css';
 class App extends Component {
   render() {
     return (
@@ -16,7 +17,7 @@ class App extends Component {
         <div className="DashboardContainer">
         <Switch>
           
-            
+            <Route  path="/showForm/:formAction/:projectId/:taskId" component={ProjectForm}/>
             <Route  path="/showForm/:formAction/:projectId" component={ProjectForm}/>
             <Route  path="/showForm/:formAction" component={ProjectForm}/>
             <Route path="/projectDashboard/:projectId" component={projectDashboard}/>

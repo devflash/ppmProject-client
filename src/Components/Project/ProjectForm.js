@@ -3,9 +3,11 @@ import styles from './ProjectForm.module.css';
 import  CustomInput from '../UI/Input';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import Error from '../ErrorHandler/ErrorHandler'
-import * as projectActions from '../../store/actions/ProjectActions';
+import Error from '../ErrorHandler/ErrorHandler';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 let projectIdentifier="";
+let taskIdentifier="";
 const taskPriorities={
     "Low":3,
     "Medium":2,
@@ -248,36 +250,63 @@ class ProjectForm extends Component{
                     options:['Low','Medium','High']
                 }
             },
+            status:{
+                inputType:"select",
+                id:'status',
+                label:'Status',
+                errorMessage:"",
+                value:"",
+                config:{
+                    name:'status',
+                    options:['To do','Inprogress','Completed']
+                }
+            },
             buttonLabel:"Update Task"
         },
         serviceError:false
     }
     componentDidMount(){
-        if(this.props.match.params.projectId && (this.props.match.params.formAction==="update" || this.props.match.params.formAction==="taskUpdate"))
+        const projectId=this.props.match.params.projectId ? this.props.match.params.projectId:null;
+        const taskId=this.props.match.params.taskId ? this.props.match.params.taskId:null;
+        const formAction=this.props.match.params.formAction;
+        if(projectId && (formAction==="update" || formAction==="taskUpdate"))
         {
+            let selectedProjectOrTask={};
             
-            const projectId=this.props.match.params.projectId;
-            const selectedProject=this.props.projects.find(cur=>{
-            return cur.projectIdentifier===projectId
-            });
-            delete selectedProject.created_At;
-            delete selectedProject.updated_At;
-            projectIdentifier=selectedProject.id;
-            for(const inputField in selectedProject)
+            if(formAction==="update")
+            {
+                selectedProjectOrTask=this.props.projects.find(cur=>{
+                    return cur.projectIdentifier===projectId
+                    });
+                    delete selectedProjectOrTask.created_At;
+                    delete selectedProjectOrTask.updated_At;
+                    projectIdentifier=selectedProjectOrTask.id;
+            }
+            if(formAction==="taskUpdate")
+            {
+                selectedProjectOrTask=this.props.tasks.find(cur=>{
+                    return cur.projectIdentifier===projectId && cur.projectSequence===taskId;
+                });
+                delete selectedProjectOrTask.created_At;
+                delete selectedProjectOrTask.updated_At;
+                taskIdentifier=selectedProjectOrTask.id; 
+            }
+            
+            for(const inputField in selectedProjectOrTask)
             {
                 this.setState((prevState)=>{
-                        if(prevState.update[inputField])
+                        if(prevState[formAction][inputField])
                         {
                         const updatedProject={
-                            ...prevState.update,
+                            ...prevState[formAction],
                             [inputField]:{
-                                ...prevState.update[inputField],
-                                value:selectedProject[inputField]
+                                ...prevState[formAction][inputField],
+                                value:selectedProjectOrTask[inputField]
                             }
     
                         }
                     
-                        return{update:updatedProject}
+                        return{[formAction]:updatedProject}
                     }
                     });
                 }
@@ -294,7 +323,7 @@ class ProjectForm extends Component{
             {
                 if(inputElement!=="buttonLabel")
                 {
-                    if(inputElement==="priority")
+                    if(inputElement==="priority" && (formType==="taskCreate"|| typeof(this.state[formType].priority.value)==="string"))
                         payload[inputElement]=taskPriorities[this.state[formType][inputElement].value];     
                     else
                         payload[inputElement]=this.state[formType][inputElement].value;
@@ -315,9 +344,9 @@ class ProjectForm extends Component{
             {
                 url="http://localhost:8080/api/backlog/"+this.props.match.params.projectId;
                 navigator="/projectDashboard/"+this.props.match.params.projectId;
-                if(formType==="update")
+                if(formType==="taskUpdate")
                 {
-                    payload.id=projectIdentifier;
+                    payload.id=taskIdentifier;
                 } 
             }
             axios.post(url,payload)
@@ -379,6 +408,9 @@ class ProjectForm extends Component{
             }
             this.setState({[formType]:updatedProjectForm});
         }
+    backClickListener=()=>{
+        this.props.history.push("/projectDashboard/"+this.props.match.params.projectId);
+    }    
         
    
     render()
@@ -398,7 +430,9 @@ class ProjectForm extends Component{
             <div className={styles.CenterTitle}>
                   <h1>Project Form</h1>
             </div>
+           { (formType==="taskCreate" || formType==="taskUpdate") && <div className={styles.backToDashboard} onClick={this.backClickListener}><FontAwesomeIcon icon={faArrowLeft} /><span>Back to project tasks</span></div>}
             {
+               
                 this.state.serviceError ?
                     <Error errorMessage="Please check connection"></Error>
                 :
@@ -442,7 +476,7 @@ class ProjectForm extends Component{
 const mapStateToProps=(state)=>{
     return{
         projects:state.projectReducer.projects,
-       
+        tasks:state.taskReducer.tasks
     }
     
 }
