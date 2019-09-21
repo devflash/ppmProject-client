@@ -27,7 +27,7 @@ const projectTask=(props)=>{
                 <div className={styles.projectTaskOperation}>
                 <CustomeButton buttonLabel="Delete" 
                                    buttonStyle="Danger"
-                                   path="/">
+                                   clickAction={props.taskDeleteClick}>
                     </CustomeButton>    
                 </div>
                 </div>

@@ -5,6 +5,7 @@ import styles from './ProjectDashboard.module.css';
 import * as taskActions from '../../store/actions/TaskActions';
 import {connect} from 'react-redux';
 import ErrorHandler from '../ErrorHandler/ErrorHandler';
+import axios from 'axios';
 const taskPriorities={
     "3":"Low",
     "2":"Medium",
@@ -12,8 +13,23 @@ const taskPriorities={
 }
 class ProjectDashboard extends Component
 {
+    state={
+        serviceError:false
+    }
     componentDidMount(){
         this.props.onFetchTasks(this.props.match.params.projectId);
+    }
+    onDeleteTaskListener=(projectId,taskId)=>{
+        const confirm=window.confirm("Are you sure? Action can not be reverted");
+        if(confirm)
+        {
+        axios.delete("http://localhost:8080/api/backlog/"+projectId+"/"+taskId)
+            .then(response=>{
+                this.props.onFetchTasks(this.props.match.params.projectId);
+            }).catch(error=>{
+                this.setState({serviceError:true})
+            })
+        }
     }
     render()
     {
@@ -41,7 +57,7 @@ class ProjectDashboard extends Component
                         </div>
                         <div className={styles.projectTasks}>
                             {toDOList.map(cur=>(
-                                <ProjectTask projectId={projectId} taskId={cur.projectSequence} taskName={cur.summary} acceptanceCriteria={cur.acceptanceCriteria} priority={taskPriorities[cur.priority]}/>
+                                <ProjectTask projectId={projectId} taskId={cur.projectSequence} taskName={cur.summary} acceptanceCriteria={cur.acceptanceCriteria} priority={taskPriorities[cur.priority]} taskDeleteClick={()=>this.onDeleteTaskListener(projectId,cur.projectSequence)}/>
                             ))}
                             
                         </div>
@@ -52,7 +68,7 @@ class ProjectDashboard extends Component
                         </div>
                         <div className={styles.projectTasks}>
                             {inProgressList.map(cur=>(
-                                <ProjectTask projectId={projectId} taskId={cur.projectSequence} taskName={cur.summary} acceptanceCriteria={cur.acceptanceCriteria} priority={taskPriorities[cur.priority]}/>
+                                <ProjectTask projectId={projectId} taskId={cur.projectSequence} taskName={cur.summary} acceptanceCriteria={cur.acceptanceCriteria} priority={taskPriorities[cur.priority]} taskDeleteClick={()=>this.onDeleteTaskListener(projectId,cur.projectSequence)}/>
                             ))}
                         </div>
                     </div>
@@ -62,7 +78,7 @@ class ProjectDashboard extends Component
                         </div>
                         <div className={styles.projectTasks}>
                             {completedList.map(cur=>(
-                                <ProjectTask projectId={projectId} taskId={cur.projectSequence} taskName={cur.summary} acceptanceCriteria={cur.acceptanceCriteria} priority={taskPriorities[cur.priority]}/>
+                                <ProjectTask projectId={projectId} taskId={cur.projectSequence} taskName={cur.summary} acceptanceCriteria={cur.acceptanceCriteria} priority={taskPriorities[cur.priority]} taskDeleteClick={()=>this.onDeleteTaskListener(projectId,cur.projectSequence)}/>
                             ))}
                             
                         </div>
