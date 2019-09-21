@@ -16,12 +16,17 @@ class Dashboard extends Component{
     }
 
     onDeleteClickHandler=(projectId)=>{
-       axios.delete('http://localhost:8080/api/project/'+projectId)
-        .then(response=>{
-            this.props.onFetchProjects();
-        }).catch(error=>{
-           this.setState({serviceError:true})
+        const confirm=window.confirm("Are you sure? Action can not be reverted");
+        if(confirm)
+        {
+            axios.delete('http://localhost:8080/api/project/'+projectId)
+            .then(response=>{
+                this.props.onFetchProjects();
+            }).catch(error=>{
+            this.setState({serviceError:true})
         })
+    }
+       
     }
     onUpdateClickHandler=(projectId)=>{
         this.props.history.push({

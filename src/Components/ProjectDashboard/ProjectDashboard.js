@@ -91,6 +91,10 @@ class ProjectDashboard extends Component
         {
             error=<ErrorHandler errorMessage="No task is created for the project"></ErrorHandler>
         }
+        if(this.props.error || this.state.serviceError)
+        {
+            error=(<ErrorHandler errorMessage="Please check connection"/>)
+        }
         
 
         return(
