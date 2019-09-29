@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Dashboard from './Components/Dashboard';
 import Header from './Components/Layout/Header';
+import Sidebar from './Components/Layout/Sidebar';
 import ProjectForm from './Components/Project/ProjectForm';
 import projectDashboard from './Components/ProjectDashboard/ProjectDashboard';
 import './App.css'
@@ -10,10 +11,20 @@ import {Route,Switch} from 'react-router-dom';
 // import "bootstrap/dist/js/bootstrap.min.js";
 // import '../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css';
 class App extends Component {
+  state={
+    showSidebar:false
+  }
+  hamburgerClickHandler=()=>{
+    this.setState({showSidebar:true});
+  }
+  backdropClickedHandler=()=>{
+    this.setState({showSidebar:false});
+  }
   render() {
     return (
       <div>
-        <Header/>
+        <Header hamburgerClick={this.hamburgerClickHandler}/>
+        <Sidebar backdropClick={this.backdropClickedHandler} showSidebar={this.state.showSidebar}/>
         <div className="DashboardContainer">
         <Switch>
           

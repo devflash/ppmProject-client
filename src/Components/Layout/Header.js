@@ -17,7 +17,7 @@ class Header extends Component{
                        <Link to="/" className={styles.navigationItem}>SignIn</Link>
                    </div>
                </div>
-               <div className={styles.toggleHamburger}>
+               <div className={styles.toggleHamburger} onClick={this.props.hamburgerClick}>
                     <div></div>
                     <div></div>
                     <div></div>

@@ -18,8 +18,8 @@ const fetchTaskFail=()=>{
 
 export const fetchTasks=(projectId)=>{
     return dispatch=>{
-        //axios.get('../service/projectTask.json')
-         axios.get('http://localhost:8080/api/backlog/'+projectId)
+        axios.get('../service/projectTask.json')
+        //  axios.get('http://localhost:8080/api/backlog/'+projectId)
         .then(response=>{
             dispatch(fetchTasksSuccess(response.data));
         }).catch(error=>{

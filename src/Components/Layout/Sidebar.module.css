@@ -1,0 +1,29 @@
+.nav
+{
+    height: 100%;
+    width: 0px;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transition-property: width;
+    transition-duration: 1.5s;
+    z-index: 200;
+}
+.openSidebar
+{
+    width:50%;
+}
+.navItem
+{
+    display: flex;
+    flex-direction: column;
+}
+.navigationItem
+{
+    text-decoration: none;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    color: black;
+}
